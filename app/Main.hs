@@ -102,5 +102,5 @@ indexremover xs ys
 
 parser :: String -> Maybe String
 parser x
-  | null x = Nothing
   | x `elem` ["1","2","3","q"] = Just x
+  | otherwise = Nothing
