@@ -45,6 +45,8 @@ to the default list!
 todo add
 todo view
 todo remove
+todo version     #Prints out version.
+todo help        #Prints out help message.
 ```
 
 These commands are self-explanatory I believe.
