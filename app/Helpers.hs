@@ -34,15 +34,19 @@ auxHelper args home handle contents numberedContents toDoPath
     | first == Just "remove" = if toDoPath == home ++ "/.config/todo.txt" then
                                         remover (drop 1 args) home handle contents numberedContents toDoPath
                                     else remover (drop 2 args) home handle contents numberedContents toDoPath
-    | otherwise = do 
-                    putStrLn "Unknown command"
-                    putStrLn "Known commands are:"
-                    putStrLn "todo view"
-                    putStrLn "todo add"
-                    putStrLn "todo remove"
+    | otherwise = do
+                    putStrLn $ "Unknown command: " ++ fromJustChar first
+                    putStrLn "Known commands are: \n"
+                    putStrLn "view"
+                    putStrLn "add"
+                    putStrLn "remove \n"
     where first = head (Just <$> args)
 
 parser :: String -> Maybe String
 parser x
   | x `elem` ["1","2","3","q"] = Just x
   | otherwise = Nothing
+
+fromJustChar :: Maybe [Char] -> [Char]
+fromJustChar (Just x) = x
+fromJustChar Nothing  = ""
