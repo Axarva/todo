@@ -1,7 +1,7 @@
 module Maps where
 
 import Paths_todo_axarva (version)
-import Data.Version (showVersion, Version)
+import Data.Version (showVersion)
 import qualified Data.Map as M
 import System.IO as I ( Handle )
 
