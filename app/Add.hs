@@ -7,7 +7,7 @@ adder args toDoPath handle
     | null args = appendToDo toDoPath handle
     | otherwise = do
         I.hClose handle
-        mapM_ (appendFile toDoPath) args
+        mapM_ (appendFile toDoPath . (++ "\n")) args
 
 appendToDo :: FilePath -> I.Handle -> IO ()
 appendToDo toDoPath handle = do

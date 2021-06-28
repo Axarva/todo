@@ -10,7 +10,7 @@ import Text.Read as R ( readMaybe )
 remover :: [String] -> String -> I.Handle -> [String] -> [String]-> FilePath -> IO ()
 remover args home handle contents numberedContents toDoPath
     | null args = removeToDo home handle contents numberedContents toDoPath
-    | notElem Nothing (map readToInt args) && A.fromJust (maximum (map readToInt args)) < length contents = error "Very large index!"
+    | notElem Nothing (map readToInt args) && A.fromJust (maximum (map readToInt args)) > length contents = error "Very large index!"
     | otherwise = do
         (tempName, tempHandle) <- I.openTempFile (home ++ "/.config/") "temp"
         let newToDo = if Nothing `elem` map readToInt args then
@@ -27,7 +27,7 @@ indexremover :: [String] -> [Int] -> [String]
 indexremover xs ys
     | null xs = []
     | null ys = xs
-    | otherwise = indexremover (L.delete (xs !! head ys) xs) (drop 1 ys)
+    | otherwise = indexremover (L.delete (xs !! head ys) xs) (drop 1 $ map (\x -> x - 1) ys)
 
 removeToDo :: Foldable t => String -> I.Handle -> [String] -> t String -> FilePath -> IO ()
 removeToDo home handle contents numberedContents toDoPath = do
