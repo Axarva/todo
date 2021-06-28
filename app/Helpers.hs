@@ -6,6 +6,7 @@ import Remove ( removeToDo, remover )
 import View ( displayToDo )
 import qualified Data.Map as M
 import Maps ( commands, inputs )
+import Strings (auxErr, nullArgsInteract)
 
 helper :: [String] -> String -> I.Handle -> [String] -> [String] -> FilePath -> IO ()
 helper args home handle contents numberedContents toDoPath
@@ -31,16 +32,3 @@ auxHelper args home handle contents numberedContents toDoPath
 maybeDoIO :: Maybe (IO ()) -> IO () -> IO ()
 maybeDoIO (Just io) fallback = io
 maybeDoIO Nothing fallback = fallback
-
-auxErr :: [Char] -> [String]
-auxErr x = ["Unknown command: " ++ x,
-            "Known commands are: \n",
-            "view",
-            "add",
-            "remove \n"]
-
-nullArgsInteract :: [String]
-nullArgsInteract = ["What would you like to do?",
-                    "1. View your TODOs",
-                    "2. Add a TODO",
-                    "3. Remove a TODO"]
