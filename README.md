@@ -82,10 +82,14 @@ The parameters for remove are the filename, and the number at which the to-be-re
 and/or a simple phrase that the to-be-removed TODO contains.
 
 An example with indexes as the parameter:
+
+
 <img src="/images/removeindex.png">
 
 
 An example with keywords as the parameter:
+
+
 <img src="/images/removekeywords.png">
 
 Currently, you CANNOT combine both types of parameters:
