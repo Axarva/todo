@@ -25,9 +25,8 @@ help = ["todo-axarva " ++ showVersion version,
         "todo add (filename) (TODO)          -- Adds the given TODO to the given file,",
         "                                       or default file if no filename is given. \n",
         "todo remove (filename) (index/TODO) -- Removes the given index OR TODO from the file,",
-        "                                       or default file if no filename is given. Either",
-        "                                       index or TODO can be used in a single command.",
-        "                                       Using both is not supported. \n",
+        "                                       or default file if no filename is given. Using",
+        "                                       both in a single command is now supported. \n",
         "todo help                           -- Prints this message. \n",
         "todo version                        -- Prints out version.\n"
     ]

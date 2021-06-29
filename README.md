@@ -42,14 +42,14 @@ WARNING: Currently, TODO only supports filenames ending with `.txt`, otherwise y
 to the default list!
 
 ```
-todo add
-todo view
-todo remove
+todo add         #Adds TODOs to your list.
+todo view        #Prints out your todo list.
+todo remove      #Removes TODOs from your list.
 todo version     #Prints out version.
 todo help        #Prints out help message.
 ```
 
-These commands are self-explanatory I believe.
+These commands are self-explanatory.
 
 ## Subcommands
 
@@ -94,11 +94,11 @@ An example with keywords as the parameter:
 
 <img src="/images/removekeywords.png">
 
-Currently, you CANNOT combine both types of parameters:
+You can also combine both types of parameters:
 ```
 todo remove "Foo" 1
 ```
-This won't work as expected and only the TODO containing "Foo" will be removed.
+
 
 ### View
 
