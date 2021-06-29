@@ -1,5 +1,6 @@
 dist
 dist-newstyle/
+app/Paths_todo_axarva.hs
 dist-*
 cabal-dev
 *.o

@@ -1,4 +1,4 @@
-module Remove (remover, removeToDo) where
+module Remove where
 
 import Data.List as L ( (\\), delete, intersect )
 import Data.Maybe as A ( fromJust, isJust )
@@ -6,17 +6,25 @@ import System.Directory as D ( removeFile, renameFile )
 import System.IO as I ( Handle, hClose, hPutStr, openTempFile )
 import Data.Char as C ( isDigit )
 
-remover :: [String] -> String -> I.Handle -> [String] -> [String]-> FilePath -> IO ()
-remover args home handle contents numberedContents toDoPath
-    | null args = removeToDo home handle contents numberedContents toDoPath
+data Container = Container {args :: [String],
+                            home :: FilePath,
+                            handle :: I.Handle,
+                            contents :: [String],
+                            numberedContents :: [String],
+                            toDoPath :: FilePath
+                           } deriving (Show, Eq)
+
+remover :: Container -> IO ()
+remover container
+    | null (args container) = removeToDo container
     | otherwise = do
-        (tempName, tempHandle) <- I.openTempFile (home ++ "/.config/") "temp"
-        let newToDo = checkPattern contents args
+        (tempName, tempHandle) <- I.openTempFile (home container ++ "/.config/") "temp"
+        let newToDo = checkPattern (contents container) (args container)
         I.hPutStr tempHandle (unlines newToDo)
-        I.hClose handle
+        I.hClose (handle container)
         I.hClose tempHandle
-        D.removeFile toDoPath
-        D.renameFile tempName toDoPath
+        D.removeFile (toDoPath container)
+        D.renameFile tempName (toDoPath container)
 
 
 indexremover :: [String] -> [Int] -> [String]
@@ -25,18 +33,18 @@ indexremover xs ys
     | null ys = xs
     | otherwise = indexremover (L.delete (xs !! head ys) xs) (drop 1 $ map (\x -> x - 1) ys)
 
-removeToDo :: Foldable t => String -> I.Handle -> [String] -> t String -> FilePath -> IO ()
-removeToDo home handle contents numberedContents toDoPath = do
-    (tempName, tempHandle) <- I.openTempFile (home ++ "/.config/") "temp"
+removeToDo :: Container -> IO ()
+removeToDo container = do
+    (tempName, tempHandle) <- I.openTempFile (home container ++ "/.config/") "temp"
     putStrLn "Which of your TODOs would you like to remove? (Input indices only)"
-    mapM_ putStrLn numberedContents
+    mapM_ putStrLn (numberedContents container)
     num <- getLine
-    let newToDo = checkPattern contents (words num)
+    let newToDo = checkPattern (contents container) (words num)
     I.hPutStr tempHandle (unlines newToDo)
-    I.hClose handle
+    I.hClose (handle container)
     I.hClose tempHandle
-    D.removeFile toDoPath
-    D.renameFile tempName toDoPath
+    D.removeFile (toDoPath container)
+    D.renameFile tempName (toDoPath container)
 
 checkPattern :: [[Char]] -> [[Char]] -> [[Char]]
 checkPattern contents args = newList
