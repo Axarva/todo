@@ -7,6 +7,7 @@ import qualified System.Environment as E
 import qualified System.IO          as I
 
 import Helpers ( helper ) 
+import Remove ( Container(Container) ) 
 
 main :: IO ()
 main = do
@@ -20,5 +21,6 @@ main = do
     handle <- I.openFile toDoPath I.ReadMode
     contents <- lines <$> I.hGetContents handle
     let numberedContents = zipWith (\n line -> show n ++ " - " ++ line) [1..] contents
-    helper args home handle contents numberedContents toDoPath
+        container = Container args home handle contents numberedContents toDoPath
+    helper container
     I.hClose handle

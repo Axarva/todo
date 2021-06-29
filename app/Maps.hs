@@ -4,27 +4,36 @@ import qualified Data.Map as M
 import System.IO as I ( Handle )
 
 import Add ( adder, appendToDo )
-import Remove ( removeToDo, remover )
+import Remove ( removeToDo, remover, Container(..) )
 import View ( displayToDo )
 import Strings (help, versionToDo)
 
-commands :: [String] -> [Char] -> I.Handle -> [String] -> [String] -> [Char] -> M.Map [Char] (IO ())
-commands args home handle contents numberedContents toDoPath
-         = M.fromList [("view", displayToDo numberedContents),
+
+commands :: Container -> M.Map [Char] (IO ())
+commands container@Container {args = args,
+                  home = home,
+                  handle = handle,
+                  contents = contents,
+                  numberedContents = numberedContents,
+                  toDoPath = toDoPath}
+         = M.fromList [("view", displayToDo container),
                        ("add", if toDoPath == home ++ "/.config/todo.txt" then
-                                     adder (drop 1 args) toDoPath handle
-                               else adder (drop 2 args) toDoPath handle),
+                                     adder oneDropContainer
+                               else adder twoDropContainer),
                         ("remove", if toDoPath == home ++ "/.config/todo.txt" then
-                                        remover (drop 1 args) home handle contents numberedContents toDoPath
-                                   else remover (drop 2 args) home handle contents numberedContents toDoPath),
+                                        remover oneDropContainer
+                                   else remover twoDropContainer),
                         ("help", mapM_ putStrLn help),
                         ("version", putStrLn versionToDo)
                       ]
+         where oneDropContainer = Container (drop 1 args) home handle contents numberedContents toDoPath
+               twoDropContainer = Container (drop 2 args) home handle contents numberedContents toDoPath
 
-inputs :: Foldable t => String -> I.Handle -> [String] -> t String -> FilePath -> M.Map [Char] (IO ())
-inputs home handle contents numberedContents toDoPath
-        = M.fromList [("1", displayToDo numberedContents),
-                     ("2", appendToDo toDoPath handle),
-                     ("3", removeToDo home handle contents numberedContents toDoPath),
+
+inputs :: Container -> M.Map [Char] (IO ())
+inputs container
+        = M.fromList [("1", displayToDo container),
+                     ("2", appendToDo container),
+                     ("3", removeToDo container),
                      ("q", putStrLn "Quitting.")
                     ]
