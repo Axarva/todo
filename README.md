@@ -12,12 +12,6 @@ After pulling this repository,
 $ cabal install
 ```
 
-Or if you don't want cabal, just:
-```
-$ cd app
-$ ghc --make Main.hs
-```
-
 # Usage
 
 ## Commands
@@ -35,11 +29,14 @@ Todo also supports CLI parameters. Here they are:
 todo [add/remove/view] [filename] [parameter for first argument]
 ```
 
-Todo uses the file `~/.config/todo.txt` as default. The main commands are:
-
 
 WARNING: Currently, TODO only supports filenames ending with `.txt`, otherwise your filename will be treated as a TODO and be added
 to the default list!
+
+
+
+Todo uses the file `~/.config/todo.txt` as default. The main commands are:
+
 
 ```
 todo add         #Adds TODOs to your list.
