@@ -5,6 +5,7 @@ import Data.Maybe as A ( fromJust, isJust )
 import System.Directory as D ( removeFile, renameFile )
 import System.IO as I ( Handle, hClose, hPutStr, openTempFile )
 import Data.Char as C ( isDigit )
+import Control.Monad as M ( when )
 
 data Container = Container {args :: [String],
                             home :: FilePath,
@@ -39,6 +40,7 @@ removeToDo container = do
     putStrLn "Which of your TODOs would you like to remove? (Input indices only)"
     mapM_ putStrLn (numberedContents container)
     num <- getLine
+    M.when (catchStr num) $ error "Input contains characters that are not digits!"
     let newToDo = checkPattern (contents container) (words num)
     I.hPutStr tempHandle (unlines newToDo)
     I.hClose (handle container)
@@ -58,3 +60,6 @@ searchString content arg
     | null f = []
     | otherwise = content
     where f =  filter (\x -> x `elem` words content) (words arg)
+
+catchStr :: String -> Bool
+catchStr = not . all C.isDigit
