@@ -1,6 +1,6 @@
 module View (displayToDo) where
-    
-import Remove ( Container(numberedContents) )
+
+import           Remove (Container (numberedContents))
 
 displayToDo :: Container -> IO ()
 displayToDo container = do

@@ -1,12 +1,12 @@
 module Maps where
 
-import qualified Data.Map as M
-import System.IO as I ( Handle )
+import qualified Data.Map  as M
+import           System.IO as I (Handle)
 
-import Add ( adder, appendToDo )
-import Remove ( removeToDo, remover, Container(..) )
-import View ( displayToDo )
-import Strings (help, versionToDo)
+import           Add       (adder, appendToDo)
+import           Remove    (Container (..), removeToDo, remover)
+import           Strings   (help, versionToDo)
+import           View      (displayToDo)
 
 
 commands :: Container -> M.Map [Char] (IO ())

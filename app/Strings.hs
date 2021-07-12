@@ -1,7 +1,7 @@
 module Strings where
 
-import Paths_todo_axarva (version)
-import Data.Version (showVersion)
+import           Data.Version      (showVersion)
+import           Paths_todo_axarva (version)
 
 auxErr :: [Char] -> [String]
 auxErr x = ["Unknown command: " ++ x,
@@ -31,5 +31,5 @@ help = ["todo-axarva " ++ showVersion version,
         "todo version                        -- Prints out version.\n"
     ]
 
-versionToDo :: String 
+versionToDo :: String
 versionToDo = "todo-axarva " ++ showVersion version

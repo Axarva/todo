@@ -1,18 +1,18 @@
 module Remove where
 
-import Data.List as L ( (\\), delete, intersect )
-import Data.Maybe as A ( fromJust, isJust )
-import System.Directory as D ( removeFile, renameFile )
-import System.IO as I ( Handle, hClose, hPutStr, openTempFile )
-import Data.Char as C ( isDigit )
-import Control.Monad as M ( when )
+import           Control.Monad    as M (when)
+import           Data.Char        as C (isDigit)
+import           Data.List        as L (delete, intersect, (\\))
+import           Data.Maybe       as A (fromJust, isJust)
+import           System.Directory as D (removeFile, renameFile)
+import           System.IO        as I (Handle, hClose, hPutStr, openTempFile)
 
-data Container = Container {args :: [String],
-                            home :: FilePath,
-                            handle :: I.Handle,
-                            contents :: [String],
+data Container = Container {args             :: [String],
+                            home             :: FilePath,
+                            handle           :: I.Handle,
+                            contents         :: [String],
                             numberedContents :: [String],
-                            toDoPath :: FilePath
+                            toDoPath         :: FilePath
                            } deriving (Show, Eq)
 
 remover :: Container -> IO ()

@@ -1,7 +1,7 @@
 module Add (adder, appendToDo) where
 
-import System.IO as I ( Handle, hClose )
-import Remove ( Container(..) )
+import           Remove    (Container (..))
+import           System.IO as I (Handle, hClose)
 
 adder :: Container -> IO ()
 adder container

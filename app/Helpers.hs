@@ -1,12 +1,12 @@
 module Helpers where
 
-import System.IO as I ( Handle )
-import Add ( adder, appendToDo )
-import Remove ( removeToDo, remover, Container(..) )
-import View ( displayToDo )
-import qualified Data.Map as M
-import Maps ( commands, inputs )
-import Strings (auxErr, nullArgsInteract)
+import           Add       (adder, appendToDo)
+import qualified Data.Map  as M
+import           Maps      (commands, inputs)
+import           Remove    (Container (..), removeToDo, remover)
+import           Strings   (auxErr, nullArgsInteract)
+import           System.IO as I (Handle)
+import           View      (displayToDo)
 
 helper :: Container -> IO ()
 helper container
@@ -31,4 +31,4 @@ auxHelper container
 
 maybeDoIO :: Maybe (IO ()) -> IO () -> IO ()
 maybeDoIO (Just io) fallback = io
-maybeDoIO Nothing fallback = fallback
+maybeDoIO Nothing fallback   = fallback
