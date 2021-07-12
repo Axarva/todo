@@ -18,7 +18,7 @@ nullArgsInteract = ["What would you like to do?",
 
 
 help :: [String]
-help = ["todo-axarva " ++ showVersion version,
+help = [ versionToDo,
         "\nUsage: \n",
         "todo view (filename)                -- Shows the TODOs of the given filename,",
         "                                       or the default if no filename is given. \n",
