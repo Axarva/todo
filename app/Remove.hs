@@ -40,7 +40,7 @@ removeToDo container = do
     putStrLn "Which of your TODOs would you like to remove? (Input indices only)"
     mapM_ putStrLn (numberedContents container)
     num <- getLine
-    M.when (catchStr num) $ error "Input contains characters that are not digits!"
+    M.when (any (==True) $ map (catchStr) $ words num) $ error "Input contains characters that are not digits!"
     let newToDo = checkPattern (contents container) (words num)
     I.hPutStr tempHandle (unlines newToDo)
     I.hClose (handle container)
